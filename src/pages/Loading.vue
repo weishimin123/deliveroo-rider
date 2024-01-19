@@ -1,6 +1,6 @@
 <template>
 	<div class="content">
-		<span>Loading</span>
+		<img src="images/Loading.png">
 	</div>
 </template>
 
@@ -15,10 +15,7 @@
 		mounted() {
 			this.timer =  setTimeout( ()=>{
 				clearTimeout(this.timer)
-				//  uni.redirectTo({
-				//  	url:"/pages/Login"			
-				//  })
-				
+				this.$router.push('/login')
 			}, 2000)
 		},
 	
@@ -27,15 +24,8 @@
 
 <style lang="less" scoped>
 	.content {
-		height: 100vh;
-		background-color: rgb(6, 127, 138);
-		display: flex;
-		flex-direction: row;
-		justify-content: center;
-		align-items: center;
-		
-		span{
-			font-size: 10vw;
+		img {
+			width: 100vw;
 		}
 	}
 </style>

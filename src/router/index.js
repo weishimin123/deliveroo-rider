@@ -51,7 +51,7 @@ let router = new VueRouter({
     },
     {
       path: '*',
-      redirect: '/login',
+      redirect: '/main',
     },
   ],
 })

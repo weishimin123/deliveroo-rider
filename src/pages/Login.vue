@@ -53,8 +53,9 @@
         <a class="apply">Apply to be a rider</a>
       </div>
     </div>
-    <v-touch @pandown="sliderDown" @panup="sliderUp">
-      <div class="slider" :style="{height: sliderHeight+'vh', top: sliderTop+'vh'}">
+    <v-touch @pandown="sliderDown" @panup="sliderUp" @panend="movingEnd">
+      <div class="slider" 
+          :style="{height: sliderHeight+'vh', top: sliderTop+'vh'}">
         <h1>Help</h1>
         <v-touch @tap="isMovingUP = false">
           <a>
@@ -141,6 +142,12 @@
           this.sliderTop =  this.sliderTop - moveDistance <= 5 ? 5 : this.sliderTop - moveDistance
         }
       }, 30),
+      movingEnd(e){
+        if(this.isMovingUP){
+          this.sliderHeight = 95
+          this.sliderTop = 5
+        }
+      }
     },
     watch:{
       isMovingUP(newVal) {

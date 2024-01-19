@@ -3,7 +3,9 @@
     <div class="main">
       <v-touch @tap="movingUpOrDown" >
         <div class="topside" :shrink="isTyping">
-          <a v-show="!isTyping"><img class="wenhao" ref="wenhao" src="images/wenhao.png" /></a>
+          <a v-show="!isTyping">
+            <img class="wenhao" ref="wenhao" src="images/wenhao.png" />
+          </a>
           <h1>
             Welcome to <br />
             Deliveroo
@@ -11,7 +13,6 @@
           <img v-show="!isTyping" class="rider" src="images/rider.png" />
         </div>
       </v-touch>
-
       <div class="downside">
         <v-touch @tap="checkTyping">
           <div v-show="inputType == 'phone'" class="input">
@@ -40,7 +41,7 @@
                 <img class="cancel" src="images/cancel.png"/>
               </a>
             </v-touch>
-              <h2 class="hint" v-show="isTyping">The email linked to your account</h2>
+            <h2 class="hint" v-show="isTyping">The email linked to your account</h2>
             <v-touch @tap="inputType = inputType == 'phone' ? 'email' : 'phone'">
               <a class="tip" v-show="isTyping">Use phone number instead?</a>
             </v-touch>
@@ -53,7 +54,7 @@
       </div>
     </div>
     <v-touch @pandown="sliderDown" @panup="sliderUp">
-      <div class="slider" :up="isMovingUP" ref="slider" :style="{}">
+      <div class="slider" :style="{height: sliderHeight+'vh', top: sliderTop+'vh'}">
         <h1>Help</h1>
         <v-touch @tap="isMovingUP = false">
           <a>
@@ -99,12 +100,12 @@
           this.isTyping = false
         }
       },
-      checkTyping(event){
-        if(!this.isTyping){
+      checkTyping(event) {
+        if(!this.isTyping) {
           this.isTyping = true
         }
       },
-      goContinue(){
+      goContinue() {
          if(!this.isTyping){
           this.isTyping = true
         } else {
@@ -120,23 +121,37 @@
       },
       sliderDown:throttle(function(e){
         let moveDistance = Math.ceil(e.deltaY/this.screenHeight * 100)
-        let originHeight = parseInt(this.$refs.slider.style.height)
-        let originTop = parseInt(this.$refs.slider.style.top)
-        // let height = originHeight - moveDistance
-        // let top = originTop + moveDistance
-        console.log(this.$refs.slider.style);
-        // console.log(moveDistance,
-        // this.$refs.slider.style,
-        // this.$refs.slider);
-        // this.$refs.slider.style.height = `${height}vh`
-        // this.$refs.slider.style.top = `${top}vh`
-      },500),
+        if(this.sliderHeight - moveDistance <= 25){
+          this.isMovingUP = false
+          this.sliderHeight = 0
+          this.sliderTop = 100
+        }else {
+          this.sliderHeight -= moveDistance
+          this.sliderTop += moveDistance
+        }
+      }, 30),
       sliderUp(e){
 
       },
       sliderUp:throttle(function(e){
-        console.log(e);
-      },500),
+        if(this.isMovingUP){
+          let deltaY = - e.deltaY
+          let moveDistance = Math.ceil(deltaY/this.screenHeight * 100)
+          this.sliderHeight = this.sliderHeight + moveDistance >= 95 ? 95 : this.sliderHeight + moveDistance 
+          this.sliderTop =  this.sliderTop - moveDistance <= 5 ? 5 : this.sliderTop - moveDistance
+        }
+      }, 30),
+    },
+    watch:{
+      isMovingUP(newVal) {
+        if(newVal){
+          this.sliderHeight = 95
+          this.sliderTop = 5
+        } else {
+          this.sliderHeight = 0
+          this.sliderTop = 100
+        }
+      }
     }
   }
 </script>
@@ -151,7 +166,7 @@
         height: 76vh;
         position: relative;
         overflow: hidden;
-        transition: height 1s;
+        transition: height .5s;
 
         h1 {
           font-weight: bold;
@@ -260,12 +275,10 @@
     }
     .slider {
       position: absolute;
-      top: 100vh;
       z-index: 2;
       width: 100vw;
-      height: 0vh;
       overflow: hidden;
-      transition: height 1s ease, top 1s ease;
+      transition: height .5s ease, top .5s ease;
       background-color: rgb(250, 250, 250);
       border-top-left-radius: 10px;
       border-top-right-radius: 10px;
@@ -303,11 +316,6 @@
         top: -35px;
         left: 92vw;
       }
-    }
-
-    .slider[up] {
-      top: 5vh;
-      height: 95vh;
     }
   }
 </style>

@@ -4,13 +4,13 @@
       <v-touch @tap="movingUpOrDown" >
         <div class="topside" :shrink="isTyping">
           <a v-show="!isTyping">
-            <img class="wenhao" ref="wenhao" src="images/wenhao.png" />
+            <img class="wenhao" ref="wenhao" src="./images/wenhao.png" />
           </a>
           <h1>
             Welcome to <br />
             Deliveroo
           </h1>
-          <img v-show="!isTyping" class="rider" src="images/rider.png" />
+          <img v-show="!isTyping" class="rider" src="./images/rider.png" />
         </div>
       </v-touch>
       <div class="downside">
@@ -20,7 +20,7 @@
             <input type="tel" placeholder="Enter phone number or email"  v-model="phone"/>
             <v-touch @tap="phone=''">
                <a class="img" v-show="isTyping">
-                <img class="cancel" src="images/cancel.png"/>
+                <img class="cancel" src="./images/cancel.png"/>
               </a>
             </v-touch>
             <h2 class="hint" v-show="isTyping">The phone number linked to your account</h2>
@@ -38,7 +38,7 @@
             <input type="tel" placeholder="Enter phone number or email"  v-model="email"/>
             <v-touch @tap="email=''">
               <a class="img" v-show="isTyping">
-                <img class="cancel" src="images/cancel.png"/>
+                <img class="cancel" src="./images/cancel.png"/>
               </a>
             </v-touch>
             <h2 class="hint" v-show="isTyping">The email linked to your account</h2>
@@ -59,13 +59,13 @@
         <h1>Help</h1>
         <v-touch @tap="isMovingUP = false">
           <a>
-            <img class="x" src="images/x.jpg" />
+            <img class="x" src="./images/x.jpg" />
           </a>
         </v-touch>
         <h2>I can't log in</h2>
         <v-touch @tap="goHelp">
           <a>
-            <img class="bigger" src="images/bigger.jpg" />
+            <img class="bigger" src="./images/right-direction.jpg" />
           </a>
         </v-touch>
       </div>

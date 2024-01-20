@@ -1,8 +1,8 @@
 import VueRouter from 'vue-router'
 import Vue from 'vue'
-import Login from '../pages/Login'
-import Main from '../pages/Main'
-import Loading from '../pages/Loading'
+import Login from '@/pages/login'
+import Main from '@/pages/main'
+import Loading from '../pages/loading'
 
 Vue.use(VueRouter)
 

@@ -39,4 +39,8 @@
     border: none;
     background: none;
   }
+
+  body {
+    overflow: hidden;
+  }
 </style>

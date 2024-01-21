@@ -2,7 +2,7 @@
   <div class="content">
     <div class="map">
       <v-touch @tap="infoSliderShow = false; feeShow = false;">
-        <img src="./images/map-galway.png" />
+        <img src="./images/main/map-galway.png" />
       </v-touch>
       <v-touch @tap="infoSliderShow = true">
         <div class="nav">
@@ -16,10 +16,10 @@
       <div class="main-header">
         <div class="direction-sign">
           <v-touch @tap="feeShow = true">
-            <img v-show="!feeShow" src="./images/up-direction.png" />
+            <img v-show="!feeShow" src="./images/main/up.png" />
           </v-touch>
           <v-touch @tap="feeShow = false">
-            <img v-show="feeShow"  src="./images/down-direction.png" />
+            <img v-show="feeShow"  src="./images/main/down.png" />
           </v-touch>
         </div>
         <div class="info">
@@ -34,10 +34,10 @@
         <div class="checklist">
           <h1>Complete your daily checklist</h1>
           <a class="warn-sign" href="#">
-            <img src="./images/warning-sign.png" />
+            <img src="./images/main/sign.png" />
           </a>
-          <a class="right-direction" href="#">
-            <img src="./images/right-direction.png" />
+          <a class="forward" href="#">
+            <img src="./images/main/forward.png" />
           </a>
         </div>
       </div>
@@ -45,7 +45,7 @@
         <div class="fee">
           <div class="fee-header">
             <h1>Upcoming fee boosts</h1>
-            <img src="./images/flash.png"/>
+            <img src="./images/main/flash.png"/>
           </div>
           <div
             class="fee-content"
@@ -57,7 +57,7 @@
               <li v-for="fee in feeInfo.feeList" :key="fee.timeRange">
                 <h1>{{ fee.timeRange }}</h1>
                 <span>{{ fee.detail }}</span>
-                <img src="./images/right-direction-little.png">
+                <img src="./images/fee/forward.png">
               </li>
             </ul>
           </div>
@@ -70,7 +70,7 @@
         <h1 id="id">Rider ID #{{riderId}}</h1>
         <v-touch @tap="infoSliderShow=false; profileSliderShow = true">
           <a href="#">
-            <img src="./images/right-direction-slider.png">
+            <img src="./images/info/forward.png">
           </a>
         </v-touch>
       </div>
@@ -79,7 +79,7 @@
           <v-touch @press="pressedElement = 'Planner'"   @pressup="pressedElement = ''">
             <div class="container" :press="pressedElement == 'Planner'">
               <h1>Planner</h1>
-              <img src="./images/planner.png" alt="">
+              <img src="./images/info/planner.png" alt="">
             </div>
           </v-touch>
           <v-touch 
@@ -89,18 +89,23 @@
           @pressup="infoSliderShow=false;earnSliderShow = true">
             <div class="container" :press="pressedElement == 'Earnings'">
               <h1>Earnings</h1>
-              <img src="./images/earning.png" alt="">
+              <img src="./images/info/earning.png" alt="">
             </div>
           </v-touch>
           <v-touch @press="pressedElement = 'Referrals'"  @pressup="pressedElement = ''">
             <div class="container" :press="pressedElement == 'Referrals'">
               <h1>Referrals</h1>
-              <img src="./images/referral.png" alt="">
+              <img src="./images/info/referral.png" alt="">
             </div>
           </v-touch>
         </div>
         <div class="downside">
-          <v-touch @press="pressedElement = 'Setttings'"  @pressup="pressedElement = ''" @panmove="pressedElement = ''">
+          <v-touch 
+          @press="pressedElement = 'Setttings'"  
+          @pressup="infoSliderShow=false;settingSliderShow=true" 
+          @panmove="pressedElement = ''"
+          @tap="pressedElement = 'Setttings';infoSliderShow= false; settingSliderShow = true"
+          >
             <h1 :press = "pressedElement == 'Setttings'">Setttings</h1>
           </v-touch>
           <v-touch 
@@ -119,7 +124,7 @@
     <div class="profile-slider slider" :show = "profileSliderShow">
       <div class="profile-header">
         <v-touch @tap="profileSliderShow=false">
-          <img src="./images/x.png" alt="">
+          <img src="./images/cancel.png" alt="">
         </v-touch>
         <h1>Profile</h1>
       </div>
@@ -128,12 +133,12 @@
           <h1>{{firstName}} {{lastName}}</h1>
           <h1>{{email}}</h1>
           <h1>{{phone}}</h1>
-          <img src="./images/uniform.png" alt="">
+          <img src="./images/profile/uniform.png" alt="">
           <a href="">Change details or emergency contact info</a>
         </div>
         <div class="vehicle">
           <h1>{{accountType}}</h1>
-          <img src="./images/ebike.png" alt="">
+          <img src="./images/profile/ebike.png" alt="">
           <a href="">View vehicle details</a>
         </div>
       </div>
@@ -141,7 +146,7 @@
     <div class="earn-slider slider" :show="earnSliderShow">
       <div class="earning-header">
         <v-touch @tap="earnSliderShow = false">
-          <img src="./images/x.png" alt="">
+          <img src="./images/cancel.png" alt="">
         </v-touch>
         <h1>Earnings</h1>
       </div>
@@ -169,8 +174,8 @@
           </div>
           <div class="content">
             <span>Previous payments</span>
-            <v-touch>
-              <img src="./images/right-direction-earn.png" alt="">
+            <v-touch @tap="paymentSliderShow=true">
+              <img src="./images/earn/forward.png" alt="">
             </v-touch>
           </div>
         </div>
@@ -181,7 +186,7 @@
           <div>
             <span>All activity</span>
             <v-touch>
-              <img src="./images/right-direction-earn.png" alt="">
+              <img src="./images/earn/forward.png" alt="">
             </v-touch>
           </div>
         </div>
@@ -190,26 +195,104 @@
     <div class="question-slider slider" :show="questionSliderShow">
       <div class="header">
         <v-touch @tap="questionSliderShow = false">
-          <img class="img-x" src="./images/x.png">
+          <img class="img-x" src="./images/cancel.png">
         </v-touch>
         <h1>FAQs</h1>
       </div>
       <div class="search">
         <input type="text" placeholder="Search" @input="inputChange" @blur="inputBlur" v-model="searchKeyword">
-        <img class="img-search" src="./images/search.png" alt="">
+        <img class="img-search" src="./images/question/search.png" alt="">
       </div>
       <div class="content">
         <ul>
           <li v-for="(question,index) in questions" :key="index" :hide="question.hide">
             <span>{{question.content}}</span>
             <v-touch>
-              <img class="img-right-direction-question" src="./images/right-direction-question.png" alt="">
+              <img src="./images/question/forward.png" alt="">
             </v-touch>
           </li>
         </ul>
       </div>
     </div>
+    <div class="setting-slider slider" :show="settingSliderShow">
+      <div class="outer">
+        <v-touch @tap="settingSliderShow = false">
+          <img class="img-x" src="./images/cancel.png" alt="">
+        </v-touch>
+        <span>Settings</span>
+        <img id="img-bike" src="./images/setting/bike.png" alt="">
+      </div>
+      <div class="outer">
+        <div class="inner">
+          <img class="img-setting" src="./images/setting/map2.png" alt="">
+          <span>Map Settings</span>
+        </div>
+        <v-touch>
+          <img class="img-forward" src="./images/setting/forward.png" alt="">
+        </v-touch>
+      </div>
+      <div class="outer">
+        <div class="inner">
+          <img class="img-setting" src="./images/setting/map1.png" alt="">
+          <span>Open in Maps</span>
+        </div>
+        <v-touch>
+          <img class="img-forward" src="./images/setting/forward.png" alt="">
+        </v-touch>
+      </div>
+      <div class="outer">
+        <div class="inner">
+          <img class="img-setting" src="./images/setting/calendar.png" alt="">
+          <span>Sync to calendar</span>
+        </div>
+        <v-touch>
+          <img class="img-forward" src="./images/setting/forward.png" alt="">
+        </v-touch>
+      </div>
+      <div class="outer">
+        <div class="inner">
+          <img class="img-setting" src="./images/setting/trash.png" alt="">
+          <span>Delete account</span>
+        </div>
+        <v-touch>
+          <img class="img-forward" src="./images/setting/forward.png" alt="">
+        </v-touch>
+      </div>
+      <div class="outer">
+        <v-touch>
+          <a href="">Log out</a>
+        </v-touch>
+      </div>
+      <div class="outer">
+        <span>Version {{version}}</span>
+      </div>
+    </div>
+    <div class="payment-slider slider" :show="paymentSliderShow">
+      <div class="outer">
+        <v-touch @tap="paymentSliderShow=false">        
+          <img src="./images/payment/backward.png" alt="">
+        </v-touch>
+        <span>Previous payments</span>
+      </div>
+      <div class="outer">
+        <span>Previous payments</span>
+      </div>
+      <div class="outer" v-for="payment in payments" :key="payment.invoiceNo">
+        <div class="left">
+          <span>{{payment.fromDate}} - {{payment.toDate}}</span>
+          <span>{{payment.invoiceNo}} · {{payment.paid ? 'Paid' : 'Unpaid'}}</span>
+        </div>
+        <div class="right">
+          <span>€{{payment.totalAmount}}</span>
+          <v-touch>
+            <img src="./images/payment/forward.png" alt="">
+          </v-touch>
+        </div>
+      </div>
+    </div>
+    <div class="activity-slider slider" :show="activitySliderShow">
 
+    </div>
   </div>
 </template>
 
@@ -219,21 +302,25 @@
     name: "Main",
     data() {
       return {
-           firstName: 'Ciaran',
-           lastName : 'Staunton' ,
-           email:'ciranstaunton@gamil.com',
+           firstName: 'Funeng',
+           lastName : 'Wang' ,
+           email:'funengwang95@gamil.com',
            phone: '+353838590816',
            riderId : '834026',
            accountType:'Electric bike',
            balance: '0.00',
            totalEarnings : 0,
            orders: 0,
+           version:'24.01.11',
 
            feeShow: false,
            infoSliderShow: false,
            profileSliderShow : false,
            earnSliderShow: false,
            questionSliderShow: false,
+           settingSliderShow: false,
+           paymentSliderShow: false,
+           activitySliderShow : false,
            pressedElement: '',
            searchKeyword: '',
            questions : [
@@ -251,7 +338,123 @@
             {content:'What should I do if I\'m having app issues?', hide: false},
             {content:'What are the core kit items?', hide: false},
             {content:'When will I receive my fees?', hide: false}
-            ]
+            ],
+          payments:[{
+            fromDate:'20 Nov',
+            toDate:'20 Nov',
+            invoiceNo: 19,
+            paid: true,
+            totalAmount:60.59
+          },{
+            fromDate:'20 Nov',
+            toDate:'20 Nov',
+            invoiceNo: 18,
+            paid: true,
+            totalAmount:60.59
+          },
+          {
+            fromDate:'20 Nov',
+            toDate:'20 Nov',
+            invoiceNo: 17,
+            paid: true,
+            totalAmount:60.59
+          },{
+            fromDate:'20 Nov',
+            toDate:'20 Nov',
+            invoiceNo: 16,
+            paid: true,
+            totalAmount:60.59
+          },{
+            fromDate:'20 Nov',
+            toDate:'20 Nov',
+            invoiceNo: 15,
+            paid: true,
+            totalAmount:60.59
+          },{
+            fromDate:'20 Nov',
+            toDate:'20 Nov',
+            invoiceNo: 14,
+            paid: true,
+            totalAmount:60.59
+          },{
+            fromDate:'20 Nov',
+            toDate:'20 Nov',
+            invoiceNo: 13,
+            paid: true,
+            totalAmount:60.59
+          },{
+            fromDate:'20 Nov',
+            toDate:'20 Nov',
+            invoiceNo: 12,
+            paid: true,
+            totalAmount:60.59
+          },{
+            fromDate:'20 Nov',
+            toDate:'20 Nov',
+            invoiceNo: 11,
+            paid: true,
+            totalAmount:60.59
+          },{
+            fromDate:'20 Nov',
+            toDate:'20 Nov',
+            invoiceNo: 10,
+            paid: true,
+            totalAmount:60.59
+          },{
+            fromDate:'20 Nov',
+            toDate:'20 Nov',
+            invoiceNo: 9,
+            paid: true,
+            totalAmount:60.59
+          },{
+            fromDate:'20 Nov',
+            toDate:'20 Nov',
+            invoiceNo: 8,
+            paid: true,
+            totalAmount:60.59
+          },{
+            fromDate:'20 Nov',
+            toDate:'20 Nov',
+            invoiceNo: 7,
+            paid: true,
+            totalAmount:60.59
+          },{
+            fromDate:'20 Nov',
+            toDate:'20 Nov',
+            invoiceNo: 6,
+            paid: true,
+            totalAmount:60.59
+          },{
+            fromDate:'20 Nov',
+            toDate:'20 Nov',
+            invoiceNo: 5,
+            paid: true,
+            totalAmount:60.59
+          },{
+            fromDate:'20 Nov',
+            toDate:'20 Nov',
+            invoiceNo: 4,
+            paid: true,
+            totalAmount:60.59
+          },{
+            fromDate:'20 Nov',
+            toDate:'20 Nov',
+            invoiceNo: 3,
+            paid: true,
+            totalAmount:60.59
+          },{
+            fromDate:'20 Nov',
+            toDate:'20 Nov',
+            invoiceNo: 2,
+            paid: true,
+            totalAmount:60.59
+          },{
+            fromDate:'20 Nov',
+            toDate:'20 Nov',
+            invoiceNo: 1,
+            paid: true,
+            totalAmount:60.59
+          }]
       }
     },
     computed: {
@@ -353,6 +556,16 @@
         if(!newVal) {
           this.pressedElement = ''
         }
+      },
+      settingSliderShow(newVal) {
+        if(!newVal) {
+          this.pressedElement = ''
+        }
+      },
+      paymentSliderShow(newVal) {
+        if(!newVal) {
+          this.pressedElement = ''
+        }
       }
     }
   }
@@ -406,11 +619,13 @@
     .main {
       position: absolute;
       top: 76.5vh;
+      height: 23.5vh;
       border-top: 1px solid rgb(61, 61, 64);
       border-top-left-radius: 10px;
       border-top-right-radius: 10px;
       background-color: rgb(28, 28, 30);
       transition: top .5s ease;
+      overflow: scroll;
       .main-header {
         .direction-sign {
           width: 100vw;
@@ -465,7 +680,7 @@
             }
           }
 
-          .right-direction {
+          .forward {
             position: absolute;
             right: 10px;
             top: 8px;
@@ -543,6 +758,7 @@
 
     .main[fullShow] {
       top:15vh;
+      height: 85vh;
     }
 
     .info-slider {
@@ -874,6 +1090,7 @@
     }
 
     .question-slider {
+      overflow: scroll;
       .header {
         height: 4.3vh;
         position: relative;
@@ -938,6 +1155,10 @@
               font-size: 14px;
               font-weight: normal;
             }
+
+            img {
+              width: 9px;
+            }
           }
 
           li[hide] {
@@ -947,12 +1168,177 @@
       }
     }
 
-    .img-x {
-      width: 16px;
+    .setting-slider {
+      display: flex;
+      flex-direction: column;
+      padding-top: 2vh;
+
+      #img-bike {
+        width: 22px;
+      }
+
+      .img-setting {
+        width: 20px;
+      }
+
+      .img-forward {
+        height: 14px;
+      }
+
+      .outer {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        background-color: rgb(44, 44, 46);
+        border-top: 1px solid rgb(68, 68, 71);
+        border-bottom: 1px solid rgb(68, 68, 71);
+        height: 5vh;
+        margin-bottom: 4vh;
+        padding-left: 4vw;
+        padding-right: 4vw;
+
+        .inner {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+
+          span {
+            margin-left: 5vw;
+            font-weight: 300;
+          }
+        }
+
     }
 
-    .img-right-direction-question {
-       width: 9px;
+      .outer:first-child {
+        justify-content: space-between;
+        background-color: rgb(28, 28, 30);
+        border-top: 0;
+        border-bottom: 0;
+      }
+
+      .outer:nth-child(2){
+        margin-bottom: 0;
+        border-bottom: 0;
+        .inner {
+              img {
+            width: 18px;
+          }
+        }
+      }
+
+      .outer:nth-child(4){
+        .inner {
+          img {
+            width: 18px;
+          }
+        }
+      }
+
+      .outer:nth-child(6) {
+        a {
+          color: rgb( 102, 224, 215);
+          font-weight: 300;
+        }
+      }
+ 
+      .outer:last-child {
+        background-color: rgb(28, 28, 30);      
+        border-top: 0;
+        border-bottom: 0; 
+        span {
+          color: rgb(152, 152, 159);
+          font-weight: 300;
+        }
+      }
+    }
+
+    .payment-slider {
+      display: flex;
+      flex-direction: column;
+      overflow: scroll;
+      background-color: rgb(44, 44, 46);
+
+      .outer {
+        height: 8.4vh;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid rgb(68, 68, 71);
+        margin-left: 4vw;
+        padding-right: 4vw;
+        padding-bottom: 1.5vh;
+        padding-top: 1.5vh;
+
+        img {
+          width: 9px;
+        }
+
+        .left {
+          display: flex;
+          flex-direction: column;
+
+          span {
+            font-weight: normal;
+          }
+
+          span:first-child {
+            font-size: 16px;
+          }
+
+          span:last-child {
+            font-size: 14px;
+            color: rgb(158, 158, 165);
+          }
+        }
+
+        .right {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-around;
+          align-items: center;
+          width: 25%;
+
+          img {
+            margin-top: .7vh;
+          }
+        }
+      }
+
+      .outer:first-child,
+      .outer:nth-child(2){
+        background-color: rgb(28, 28, 30);
+        margin-left: 0;
+        padding-left: 4vw;
+        span {
+          font-weight: bold;
+        }
+      }
+
+      .outer:first-child {
+        justify-content: flex-start;
+        border-bottom: 0;
+        img{
+          width: 18px;
+          margin-right: 25vw;
+        }
+
+        span {
+          font-size: 16px;
+        }
+      }
+
+      .outer:nth-child(2){
+        span {
+          font-size: 18px;
+        }
+      }
+    }
+
+    .img-x {
+      width: 16px;
     }
   }
 </style>

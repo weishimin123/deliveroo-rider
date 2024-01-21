@@ -209,6 +209,7 @@
         </ul>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -410,7 +411,6 @@
       border-top-right-radius: 10px;
       background-color: rgb(28, 28, 30);
       transition: top .5s ease;
-
       .main-header {
         .direction-sign {
           width: 100vw;
@@ -477,8 +477,8 @@
       }
 
       .main-content {
-         background-color: rgb(0, 0, 0);
-          padding: 20px;
+        background-color: rgb(0, 0, 0);
+        padding: 20px;
          .fee { 
           background-color: rgb(28, 28, 30);
           border-top-left-radius: 10px;
@@ -660,6 +660,7 @@
       border-top-left-radius: 10px;
       border-top-right-radius: 10px;
       transition: top .5s ease, height .5s ease;
+      overflow: hidden;
     }
 
     .slider[show]{
@@ -668,6 +669,7 @@
     }
 
     .profile-slider {
+      
       .profile-header {
         height: 14vh;
         padding-left: 3vw;

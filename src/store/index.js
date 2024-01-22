@@ -6,9 +6,10 @@ import setting from '@/store/setting'
 import question from '@/store/question'
 import earning from '@/store/earning'
 import profile from '@/store/profile'
+import fee from '@/store/fee'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  modules: { activity, payment, setting, question, earning, profile },
+  modules: { activity, payment, setting, question, earning, profile, fee },
 })

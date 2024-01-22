@@ -37,7 +37,7 @@
           :press="pressedElement == 'Previous payments'"
         >
           <span>Previous payments</span>
-          <img src="./images/forward.png" alt="" />
+          <img src="../images/forward.png" alt="" />
         </v-touch>
       </div>
       <div class="activity">
@@ -52,7 +52,7 @@
           :press="pressedElement == 'All activity'"
         >
           <span>All activity</span>
-          <img src="./images/forward.png" alt="" />
+          <img src="../images/forward.png" alt="" />
         </v-touch>
       </div>
     </div>

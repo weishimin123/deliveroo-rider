@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import VueTouch from 'vue-touch'
 import store from '@/store'
+import {Decimal} from 'decimal.js'
 
 Vue.config.productionTip = false
 Vue.use(VueTouch, {name:'v-touch'})

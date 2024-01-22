@@ -40,7 +40,24 @@
     background: none;
   }
 
-  body {
-    /* overflow: hidden; */
+  .slider {
+    position: absolute;
+    top: 100vh;
+    height: 0vh;
+    width: 100vw;
+    background-color: rgb(28, 28, 30);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    transition: top 0.5s ease, height 0.5s ease;
+    overflow: hidden;
   }
+
+  .slider[show] {
+    top: 5vh;
+    height: 95vh;
+  }
+
+      .img-x {
+      width: 16px;
+    }
 </style>

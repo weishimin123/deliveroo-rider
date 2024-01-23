@@ -76,7 +76,6 @@
   .setting-slider {
     display: flex;
     flex-direction: column;
-    padding-top: 2vh;
 
     #img-bike {
       width: 22px;
@@ -120,6 +119,7 @@
       background-color: rgb(28, 28, 30);
       border-top: 0;
       border-bottom: 0;
+      margin-top: 2vh;
     }
 
     .outer:nth-child(2) {

@@ -365,7 +365,7 @@ const state = {
             },
             {
               fee: 4.57,
-              extra:1.83,
+              extra: 1.83,
               details: [
                 {
                   shop: 'Lana galway City Asian Street Food',
@@ -393,7 +393,7 @@ const state = {
                   place: 'GAL',
                   orderNo: '1961',
                 },
-              ]
+              ],
             },
           ],
         },
@@ -797,7 +797,7 @@ const state = {
           },
           {
             fee: 4.57,
-            extra:1.83,
+            extra: 1.83,
             details: [
               {
                 shop: 'Lana galway City Asian Street Food',
@@ -825,7 +825,7 @@ const state = {
                 place: 'GAL',
                 orderNo: '1961',
               },
-            ]
+            ],
           },
         ],
       },
@@ -834,12 +834,19 @@ const state = {
 }
 
 const actions = {
-  selectWeekly(context,index) {
-    console.log(index);
-  }
+  selectWeekly(context, index) {
+    console.log(index)
+  },
+  clearSelectedWeekly(context) {
+    context.commit('CLEAR')
+  },
 }
 
-const mutations = {}
+const mutations = {
+  CLEAR(state) {
+    state.selectedWeeklyActivity = {}
+  },
+}
 
 const getters = {}
 

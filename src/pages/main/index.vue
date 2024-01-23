@@ -85,7 +85,7 @@
         settingSliderShow: false,
         paymentSliderShow: false,
         activitySliderShow: false,
-        weeklySliderShow: true,
+        weeklySliderShow: false,
         pressedElement: "",
       }
     },
@@ -98,7 +98,7 @@
       Profile,
       Fee,
       Info,
-      Weekly
+      Weekly,
     },
     computed: {
       ...mapState({
@@ -155,6 +155,9 @@
       })
       this.$bus.$on("closeInfo", () => {
         this.infoSliderShow = false
+      })
+      this.$bus.$on("closeWeekly", () => {
+        this.weeklySliderShow = false
       })
 
       this.$bus.$on("openActivity", () => {

@@ -188,6 +188,9 @@
       this.$bus.$on("openWeekly", () => {
         this.weeklySliderShow = true
       })
+      this.$bus.$on("openDaily", () => {
+        this.dailySliderShow = true
+      })
 
       this.$bus.$on("setPressedEle", (val) => {
         this.pressedElement = val

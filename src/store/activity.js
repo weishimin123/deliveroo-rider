@@ -4,18 +4,19 @@ const state = {
     {
       fromDate: '13 Nov',
       toDate: '19 Nov',
-      details: [
+      dayActivities: [
         {
           date: '19 Nov',
-          details: [
+          day: 'Sun',
+          orders: [
             {
               fee: 5.28,
               place: 'BLL',
-              details: [
+              shop: 'Shake Dog Wellpark Retail Centre',
+              orderDetails: [
                 {
                   start: '15:39',
                   complete: '16:06',
-                  shop: 'Shake Dog Wellpark Retail Centre',
                   orderNo: '2880',
                 },
               ],
@@ -23,61 +24,55 @@ const state = {
             {
               fee: 9.03,
               place: 'GAL',
-              details: [
+              shop: "McDonald's",
+              orderDetails: [
                 {
                   start: '16:06',
                   complete: '16:49',
-
                   orderNo: 3313,
-                  shop: "McDonald's",
                 },
                 {
                   start: '16:06',
                   complete: '16:56',
                   orderNo: 1862,
-                  shop: "McDonald's",
                 },
               ],
             },
             {
               fee: 6.05,
               place: 'GAL',
-              details: [
+              shop: "Papa John's",
+              orderDetails: [
                 {
-                  shop: "Papa John's",
                   start: '15:11',
                   complete: '15:38',
-
                   orderNo: '0461',
                 },
               ],
             },
             {
               fee: 4.11,
+              shop: 'Subway',
               place: 'GAL',
-              details: [
+              orderDetails: [
                 {
-                  shop: 'Subway',
                   start: '14:53',
                   complete: '15:10',
-
                   orderNo: '0319',
                 },
               ],
             },
             {
               fee: 7.27,
+              shop: 'The Chili Shack',
               place: 'GAL',
-              details: [
+              orderDetails: [
                 {
-                  shop: 'The Chili Shack',
-
                   start: '14:27',
                   complete: '14:46',
                   orderNo: '4811',
                 },
                 {
-                  shop: 'The Chili Shack',
                   start: '14:27',
                   complete: '14:53',
                   orderNo: '7011',
@@ -87,13 +82,12 @@ const state = {
             {
               fee: 3.28,
               extra: 1.31,
+              shop: "McDonald's",
               place: 'SHT',
-              details: [
+              orderDetails: [
                 {
-                  shop: "McDonald's",
                   start: '13:54',
                   complete: '14:19',
-
                   orderNo: '3644',
                 },
               ],
@@ -102,33 +96,31 @@ const state = {
         },
         {
           date: '18 Nov',
-          details: [
+          day: 'Sat',
+          orders: [
             {
               fee: 9.65,
+              shop: 'Subway',
               place: 'GAL',
-              details: [
+              orderDetails: [
                 {
                   start: '16:35',
                   complete: '16:54',
                   orderNo: '7933',
-
-                  shop: "Supermac's",
                 },
                 {
                   start: '16:35',
                   complete: '17:07',
                   orderNo: '0578',
-                  shop: "Supermac's",
                 },
               ],
             },
             {
               fee: 5.57,
+              shop: 'Subway',
               place: 'GAL',
-              details: [
+              orderDetails: [
                 {
-                  shop: 'Subway',
-
                   start: '16:06',
                   complete: '16:26',
                   orderNo: '0778',
@@ -137,11 +129,10 @@ const state = {
             },
             {
               fee: 5.57,
+              shop: "Supermac's",
               place: 'GAL',
-              details: [
+              orderDetails: [
                 {
-                  shop: "Supermac's",
-
                   orderNo: '0888',
                   start: '15:31',
                   complete: '15:59',
@@ -150,19 +141,18 @@ const state = {
             },
             {
               fee: 9.91,
+              shop: 'Boojum',
               place: 'GAL',
-              details: [
+              orderDetails: [
                 {
                   start: '14:29',
                   complete: '15:08',
                   orderNo: '0276',
-                  shop: 'Boojum',
                 },
                 {
                   start: '14:29',
                   complete: '15:12',
                   orderNo: '0518',
-                  shop: 'Boojum',
                 },
               ],
             },
@@ -170,14 +160,14 @@ const state = {
         },
         {
           date: '17 Nov',
-          details: [
+          day: 'Fri',
+          orders: [
             {
               fee: 5.56,
+              shop: 'Osaka Japanese and Korean BBQ',
               place: 'SLTH',
-              details: [
+              orderDetails: [
                 {
-                  shop: 'Osaka Japanese and Korean BBQ',
-
                   orderNo: '7435',
                   start: '21:58',
                   complete: '22:19',
@@ -186,17 +176,15 @@ const state = {
             },
             {
               fee: 7.47,
+              shop: "Papa John's",
               place: 'NUNS',
-              details: [
+              orderDetails: [
                 {
-                  shop: "Papa John's",
-
                   orderNo: '6292',
                   start: '21:36',
                   complete: '21:52',
                 },
                 {
-                  shop: "Papa John's",
                   orderNo: '4085',
                   start: '21:36',
                   complete: '21:57',
@@ -205,17 +193,15 @@ const state = {
             },
             {
               fee: 10.87,
+              shop: 'Londis',
               place: 'NUNS',
-              details: [
+              orderDetails: [
                 {
-                  shop: 'Londis',
-
                   orderNo: '1190',
                   start: '21:07',
                   complete: '21:26',
                 },
                 {
-                  shop: 'Kawa Asian Street Food',
                   orderNo: '8052',
                   start: '21:07',
                   complete: '21:32',
@@ -225,11 +211,10 @@ const state = {
             {
               fee: 5.35,
               extra: 1.07,
+              shop: "McDonald's",
               place: 'SHT',
-              details: [
+              orderDetails: [
                 {
-                  shop: "McDonald's",
-
                   orderNo: '5999',
                   start: '20:46',
                   complete: '21:07',
@@ -239,11 +224,10 @@ const state = {
             {
               fee: 4.01,
               extra: 1.2,
+              shop: 'Wokbaba Asian',
               place: 'KNC',
-              details: [
+              orderDetails: [
                 {
-                  shop: 'Wokbaba Asian',
-
                   orderNo: '6841',
                   start: '20:30',
                   complete: '20:44',
@@ -253,12 +237,12 @@ const state = {
             {
               fee: 10.89,
               extra: 2.18,
-              place: 'GAL',
               tip: 1,
-              details: [
+              place: 'GAL',
+              shop: 'Wokbaba Asian',
+              orderDetails: [
                 {
                   orderNo: '7767',
-
                   start: '19:45',
                   complete: '20:17',
                 },
@@ -273,12 +257,12 @@ const state = {
               fee: 5.51,
               extra: 2.76,
               tip: 2,
+              shop: 'Wokbaba Asian',
               place: 'GAL',
-              details: [
+              orderDetails: [
                 {
                   start: '17:47',
                   complete: '18:22',
-
                   orderNo: '3156',
                 },
               ],
@@ -287,11 +271,11 @@ const state = {
               fee: 7.01,
               extra: 3.51,
               place: 'GAL',
-              details: [
+              shop: 'Wokbaba Asian',
+              orderDetails: [
                 {
                   start: '17:21',
                   complete: '17:47',
-
                   orderNo: '6573',
                 },
               ],
@@ -300,27 +284,28 @@ const state = {
         },
         {
           date: '16 Nov',
-          place: 'BLT',
-          details: [
+          day: 'Thu',
+          orders: [
             {
               fee: 5.79,
-              details: [
+              shop: "McDonald's",
+              place: 'SHT',
+              orderDetails: [
                 {
                   start: '20:24',
                   complete: '20:46',
 
                   orderNo: '6108',
-                  shop: "Beeny's",
                 },
               ],
             },
             {
               fee: 3.95,
               extra: 1.19,
+              shop: "McDonald's",
               place: 'SHT',
-              details: [
+              orderDetails: [
                 {
-                  shop: "McDonald's",
                   start: '18:48',
                   complete: '19:32',
 
@@ -330,49 +315,46 @@ const state = {
             },
             {
               fee: 4.63,
+              shop: "McDonald's",
               place: 'GAL',
-              details: [
+              orderDetails: [
                 {
-                  shop: "McDonald's",
                   start: '21:34',
                   complete: '22:01',
-
                   orderNo: '3737',
                 },
               ],
             },
             {
               fee: 4.69,
+              shop: 'Subway',
               place: 'GAL',
-              details: [
+              orderDetails: [
                 {
-                  shop: 'Subway',
                   start: '21:12',
                   complete: '21:28',
-
                   orderNo: '5475',
                 },
               ],
             },
             {
               fee: 5.26,
+              shop: 'Burger King',
               place: 'GAL',
-              details: [
+              orderDetails: [
                 {
-                  shop: 'Burger King',
                   start: '20:54',
                   complete: '21:12',
-
                   orderNo: '9743',
                 },
               ],
             },
             {
               fee: 5.07,
+              shop: "Supermac's",
               place: 'GAL',
-              details: [
+              orderDetails: [
                 {
-                  shop: "Supermac's",
                   start: '20:00',
                   complete: '20:12',
                   orderNo: '0620',
@@ -382,13 +364,12 @@ const state = {
             {
               fee: 4.57,
               extra: 1.83,
+              shop: 'Lana galway City Asian Street Food',
               place: 'GAL',
-              details: [
+              orderDetails: [
                 {
-                  shop: 'Lana galway City Asian Street Food',
                   start: '18:07',
                   complete: '18:43',
-
                   orderNo: '9945',
                 },
               ],
@@ -398,7 +379,8 @@ const state = {
               extra: 1.34,
               tip: 1,
               place: 'GAL',
-              details: [
+              shop: 'Lana galway City Asian Street Food',
+              orderDetails: [
                 {
                   start: '17:19',
                   complete: '17:36',
@@ -502,7 +484,7 @@ const state = {
             fee: 4.11,
             shop: 'Subway',
             place: 'GAL',
-            details: [
+            orderDetails: [
               {
                 start: '14:53',
                 complete: '15:10',
@@ -514,7 +496,7 @@ const state = {
             fee: 7.27,
             shop: 'The Chili Shack',
             place: 'GAL',
-            details: [
+            orderDetails: [
               {
                 start: '14:27',
                 complete: '14:46',
@@ -532,7 +514,7 @@ const state = {
             extra: 1.31,
             shop: "McDonald's",
             place: 'SHT',
-            details: [
+            orderDetails: [
               {
                 start: '13:54',
                 complete: '14:19',
@@ -548,6 +530,8 @@ const state = {
         orders: [
           {
             fee: 9.65,
+            shop: 'Subway',
+            place: 'GAL',
             orderDetails: [
               {
                 start: '16:35',
@@ -689,7 +673,6 @@ const state = {
             orderDetails: [
               {
                 orderNo: '7767',
-
                 start: '19:45',
                 complete: '20:17',
               },
@@ -704,6 +687,7 @@ const state = {
             fee: 5.51,
             extra: 2.76,
             tip: 2,
+            shop: 'Wokbaba Asian',
             place: 'GAL',
             orderDetails: [
               {
@@ -717,6 +701,7 @@ const state = {
             fee: 7.01,
             extra: 3.51,
             place: 'GAL',
+            shop: 'Wokbaba Asian',
             orderDetails: [
               {
                 start: '17:21',
@@ -729,6 +714,7 @@ const state = {
       },
       {
         date: '16 Nov',
+        day: 'Thu',
         orders: [
           {
             fee: 5.79,
@@ -823,6 +809,7 @@ const state = {
             extra: 1.34,
             tip: 1,
             place: 'GAL',
+            shop: 'Lana galway City Asian Street Food',
             orderDetails: [
               {
                 start: '17:19',
@@ -841,99 +828,12 @@ const state = {
       },
     ],
   },
-  dayActivity: {
-    date: '19 Nov',
-    day: 'Sun',
-    orders: [
-      {
-        fee: 5.28,
-        place: 'BLL',
-        shop: 'Shake Dog Wellpark Retail Centre',
-        orderDetails: [
-          {
-            start: '15:39',
-            complete: '16:06',
-            orderNo: '2880',
-          },
-        ],
-      },
-      {
-        fee: 9.03,
-        place: 'GAL',
-        shop: "McDonald's",
-        orderDetails: [
-          {
-            start: '16:06',
-            complete: '16:49',
-            orderNo: 3313,
-          },
-          {
-            start: '16:06',
-            complete: '16:56',
-            orderNo: 1862,
-          },
-        ],
-      },
-      {
-        fee: 6.05,
-        place: 'GAL',
-        shop: "Papa John's",
-        orderDetails: [
-          {
-            start: '15:11',
-            complete: '15:38',
-            orderNo: '0461',
-          },
-        ],
-      },
-      {
-        fee: 4.11,
-        place: 'GAL',
-        shop: 'Subway',
-        orderDetails: [
-          {
-            start: '14:53',
-            complete: '15:10',
-            orderNo: '0319',
-          },
-        ],
-      },
-      {
-        fee: 7.27,
-        place: 'GAL',
-        shop: 'The Chili Shack',
-        orderDetails: [
-          {
-            start: '14:27',
-            complete: '14:46',
-            orderNo: '4811',
-          },
-          {
-            start: '14:27',
-            complete: '14:53',
-            orderNo: '7011',
-          },
-        ],
-      },
-      {
-        fee: 3.28,
-        extra: 1.31,
-        place: 'SHT',
-        shop: "McDonald's",
-        orderDetails: [
-          {
-            start: '13:54',
-            complete: '14:19',
-            orderNo: '3644',
-          },
-        ],
-      },
-    ],
-  },
+  dayActivity: {},
 }
 
 const actions = {
   selectDaily(context, index) {
+    console.log(index)
     context.commit('SELECTDAILY', index)
   },
   clearWeekly(context) {

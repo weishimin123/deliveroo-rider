@@ -2,7 +2,7 @@
   <div class="weekly-slider slider" :show="show">
     <div class="header">
       <div class="outer">
-        <v-touch @tap="backToActivitySlider">
+        <v-touch @tap="closeWeeklySlider">
           <img src="../images/backward.png" alt="" />
         </v-touch>
         <span>{{ weeklyStartDate }} - {{ weeklyCompleteDate }}</span>
@@ -94,12 +94,13 @@
         }
         return sum.toNumber()
       },
-      backToActivitySlider() {
+      closeWeeklySlider() {
         this.$bus.$emit("closeWeekly")
         this.$store.dispatch("clearWeekly")
       },
       selectDailyActivity(index) {
-        this.$store.dispatch('selectDaily')
+        this.$store.dispatch('selectDaily',index)
+        this.$bus.$emit('openDaily')
       },
     },
   }

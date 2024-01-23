@@ -58,6 +58,7 @@
     <Payment :show="paymentSliderShow"></Payment>
     <Activity :show="activitySliderShow"></Activity>
     <Weekly :show="weeklySliderShow"></Weekly>
+    <weeklyDetail :show="weeklyDetailSliderShow"></weeklyDetail>
   </div>
 </template>
 
@@ -71,6 +72,7 @@
   import Info from "@/pages/info"
   import Fee from "@/pages/fee"
   import Weekly from "@/pages/activity/weekly"
+  import weeklyDetail from "@/pages/activity/weeklyDetail"
   import { mapState } from "vuex"
 
   export default {
@@ -86,6 +88,7 @@
         paymentSliderShow: false,
         activitySliderShow: false,
         weeklySliderShow: false,
+        weeklyDetailSliderShow: true,
         pressedElement: "",
       }
     },
@@ -99,6 +102,7 @@
       Fee,
       Info,
       Weekly,
+      weeklyDetail
     },
     computed: {
       ...mapState({

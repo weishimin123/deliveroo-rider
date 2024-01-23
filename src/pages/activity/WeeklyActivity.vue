@@ -5,7 +5,7 @@
         <v-touch @tap="backToActivitySlider">
           <img src="../images/backward.png" alt="" />
         </v-touch>
-        <span>{{ fromDate }} - {{ toDate }}</span>
+        <span>{{ weeklyStartDate }} - {{ weeklyCompleteDate }}</span>
       </div>
       <div class="outer">
         <div class="left">
@@ -17,28 +17,26 @@
           <span>Total earnings</span>
         </div>
         <div class="right">
-          <span>{{ totalOrders }}</span>
+          <span>{{ weeklyOrders }}</span>
           <span>Orders</span>
         </div>
       </div>
       <div class="outer">
         <span>Activity</span>
-        <span v-if="days > 1">{{ days }} days</span>
-        <span v-else>{{ days }} day</span>
+        <span v-if="weeklyActivityDays > 1">{{ weeklyActivityDays }} days</span>
+        <span v-else>{{ weeklyActivityDays }} day</span>
       </div>
     </div>
     <div class="content">
-      <div class="outer" v-for="(detail, index) in details" :key="index">
+      <div class="outer" v-for="(dayActivity, index) in dayActivities" :key="index">
         <div class="left">
-          <span>{{ detail.date }}</span>
-          <span v-if="getOrders(detail) > 1"
-            >{{ getOrders(detail) }} orders</span
-          >
-          <span v-else>{{ getOrders(detail) }}} day</span>
-        </div>
+          <span>{{ dayActivity.date }}</span>
+          <span v-if="getOrders(dayActivity) > 1">{{ getOrders(dayActivity) }} orders</span >
+          <span v-else>{{ getOrders(dayActivity) }} day</span>
+        </div> 
         <div class="right">
-          <span>€{{ getOrderAmount(detail) }}</span>
-          <v-touch>
+          <span>€{{ getOrderAmount(dayActivity) }}</span>
+          <v-touch @tap="selectDailyActivity(index)">
             <img src="../images/forward.png" alt="" />
           </v-touch>
         </div>
@@ -48,83 +46,60 @@
 </template>
 
 <script>
-  import { mapState } from "vuex"
+  import { mapState, mapGetters } from "vuex"
   import Decimal from "decimal.js"
 
   export default {
-    name: "Weekly",
+    name: "WeeklyActivity",
     data() {
       return {}
     },
     props: ["show"],
     computed: {
       ...mapState({
-        activty: (state) => state.activity.selectedWeeklyActivity ,
+        weeklyActivity: (state) => state.activity.weeklyActivity,
       }),
-      totalOrders() {
-        let orders = 0
-        this.details.forEach((element) => {
-          orders += element.details.length
-        })
-        return orders
-      },
-      totalEarning() {
-        let sum = new Decimal(0)
-        this.details.forEach((element) => {
-          element.details.forEach((orderDetail) => {
-            sum = sum.add(new Decimal(orderDetail.fee))
-            if (orderDetail.extra) {
-              sum = sum.add(new Decimal(orderDetail.extra))
-            }
-            if (orderDetail.tip) {
-              sum = sum.add(new Decimal(orderDetail.tip))
-            }
-          })
-        })
-        return sum.toNumber()
-      },
-      details() {
-        return this.activty.details || []
-      },
-      fromDate() {
-        return this.activty.fromDate
-      },
-      toDate() {
-        return this.activty.toDate
-      },
+      ...mapGetters([
+        "weeklyOrders",
+        "weeklyStartDate",
+        "weeklyCompleteDate",
+        "weeklyActivityDays",
+        "weeklyEarnings",
+        "dayActivities",
+      ]),
       intValue() {
-        return Math.floor(this.totalEarning)
+        return Math.floor(this.weeklyEarnings.toNumber())
       },
       floatValue() {
-        return new Decimal(this.totalEarning)
+        return this.weeklyEarnings
           .sub(new Decimal(this.intValue))
           .mul(new Decimal(100))
           .toNumber()
       },
-      days() {
-        return this.details.length
-      },
     },
     methods: {
-      getOrders(detail) {
-        return detail.details.length
+      getOrders(dayActivity) {
+        return dayActivity.orders.length
       },
-      getOrderAmount(detail) {
+      getOrderAmount(dayActivity) {
         let sum = new Decimal(0)
-        detail.details.forEach((ele) => {
-          sum = sum.add(new Decimal(ele.fee))
-          if (ele.extra) {
-            sum = sum.add(new Decimal(ele.extra))
+        for (const order of dayActivity.orders) {
+          sum = sum.add(new Decimal(order.fee))
+          if (order.extra) {
+            sum = sum.add(new Decimal(order.extra))
           }
-          if (ele.tip) {
-            sum = sum.add(new Decimal(ele.tip))
+          if (order.tip) {
+            sum = sum.add(new Decimal(order.tip))
           }
-        })
+        }
         return sum.toNumber()
       },
       backToActivitySlider() {
-        this.$bus.$emit('closeWeekly')
-        this.$store.dispatch('clearSelectedWeekly')
+        this.$bus.$emit("closeWeekly")
+        this.$store.dispatch("clearWeekly")
+      },
+      selectDailyActivity(index) {
+        this.$store.dispatch('selectDaily')
       },
     },
   }

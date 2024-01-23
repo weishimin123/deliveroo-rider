@@ -57,8 +57,8 @@
     <Setting :show="settingSliderShow"></Setting>
     <Payment :show="paymentSliderShow"></Payment>
     <Activity :show="activitySliderShow"></Activity>
-    <Weekly :show="weeklySliderShow"></Weekly>
-    <weeklyDetail :show="weeklyDetailSliderShow"></weeklyDetail>
+    <WeeklyActivity :show="weeklySliderShow"></WeeklyActivity>
+    <DailyActivity :show="dailySliderShow"></DailyActivity>
   </div>
 </template>
 
@@ -71,8 +71,8 @@
   import Profile from "@/pages/profile"
   import Info from "@/pages/info"
   import Fee from "@/pages/fee"
-  import Weekly from "@/pages/activity/weekly"
-  import weeklyDetail from "@/pages/activity/weeklyDetail"
+  import WeeklyActivity from "@/pages/activity/WeeklyActivity"
+  import DailyActivity from "@/pages/activity/DailyActivity"
   import { mapState } from "vuex"
 
   export default {
@@ -87,8 +87,8 @@
         settingSliderShow: false,
         paymentSliderShow: false,
         activitySliderShow: false,
-        weeklySliderShow: false,
-        weeklyDetailSliderShow: true,
+        weeklySliderShow: true,
+        dailySliderShow: false,
         pressedElement: "",
       }
     },
@@ -101,8 +101,8 @@
       Profile,
       Fee,
       Info,
-      Weekly,
-      weeklyDetail
+      WeeklyActivity,
+      DailyActivity,
     },
     computed: {
       ...mapState({
@@ -162,6 +162,9 @@
       })
       this.$bus.$on("closeWeekly", () => {
         this.weeklySliderShow = false
+      })
+      this.$bus.$on("closeDayActivity", () => {
+        this.dailySliderShow = false
       })
 
       this.$bus.$on("openActivity", () => {

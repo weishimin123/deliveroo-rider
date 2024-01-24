@@ -56,9 +56,23 @@
     <Question :show="questionSliderShow"></Question>
     <Setting :show="settingSliderShow"></Setting>
     <Payment :show="paymentSliderShow"></Payment>
-    <Activity :show="activitySliderShow"></Activity>
-    <WeeklyActivity :show="weeklySliderShow"></WeeklyActivity>
-    <DailyActivity :show="dailySliderShow"></DailyActivity>
+    <Activity
+      :show="activitySliderShow"
+      :pressedElement="pressedElement"
+    ></Activity>
+    <MonthlyActivity
+      :show="monthlySliderShow"
+      :pressedElement="pressedElement"
+    ></MonthlyActivity>
+    <WeeklyActivity
+      :show="weeklySliderShow"
+      :pressedElement="pressedElement"
+    ></WeeklyActivity>
+    <DailyActivity
+      :show="dailySliderShow"
+      :pressedElement="pressedElement"
+    ></DailyActivity>
+    <Order :show="orderSliderShow"></Order>
   </div>
 </template>
 
@@ -73,7 +87,9 @@
   import Fee from "@/pages/fee"
   import WeeklyActivity from "@/pages/activity/WeeklyActivity"
   import DailyActivity from "@/pages/activity/DailyActivity"
+  import Order from "@/pages/activity/Order.vue"
   import { mapState } from "vuex"
+  import MonthlyActivity from "../activity/MonthlyActivity"
 
   export default {
     name: "Main",
@@ -87,8 +103,10 @@
         settingSliderShow: false,
         paymentSliderShow: false,
         activitySliderShow: false,
-        weeklySliderShow: true,
+        monthlySliderShow: false,
+        weeklySliderShow: false,
         dailySliderShow: false,
+        orderSliderShow: false,
         pressedElement: "",
       }
     },
@@ -101,8 +119,10 @@
       Profile,
       Fee,
       Info,
+      MonthlyActivity,
       WeeklyActivity,
       DailyActivity,
+      Order,
     },
     computed: {
       ...mapState({
@@ -137,6 +157,16 @@
           this.pressedElement = ""
         }
       },
+      dailySliderShow(newVal) {
+        if (!newVal) {
+          this.pressedElement = ""
+        }
+      },
+      weeklySliderShow(newVal) {
+        if (!newVal) {
+          this.pressedElement = ""
+        }
+      },
     },
     mounted() {
       this.$bus.$on("closeActivity", () => {
@@ -160,11 +190,17 @@
       this.$bus.$on("closeInfo", () => {
         this.infoSliderShow = false
       })
+      this.$bus.$on("closeMonthly", () => {
+        this.monthlySliderShow = false
+      })
       this.$bus.$on("closeWeekly", () => {
         this.weeklySliderShow = false
       })
       this.$bus.$on("closeDayActivity", () => {
         this.dailySliderShow = false
+      })
+      this.$bus.$on("closeOrder", () => {
+        this.orderSliderShow = false
       })
 
       this.$bus.$on("openActivity", () => {
@@ -185,11 +221,17 @@
       this.$bus.$on("openQuestion", () => {
         this.questionSliderShow = true
       })
+      this.$bus.$on("openMonthly", () => {
+        this.monthlySliderShow = true
+      })
       this.$bus.$on("openWeekly", () => {
         this.weeklySliderShow = true
       })
       this.$bus.$on("openDaily", () => {
         this.dailySliderShow = true
+      })
+      this.$bus.$on("openOrder", () => {
+        this.orderSliderShow = true
       })
 
       this.$bus.$on("setPressedEle", (val) => {

@@ -2,10 +2,10 @@
   <div class="weekly-slider slider" :show="show">
     <div class="header">
       <div class="outer">
-        <v-touch @tap="closeWeeklySlider">
+        <v-touch @tap="closeMonthlySlider">
           <img src="../images/backward.png" alt="" />
         </v-touch>
-        <span>{{ weeklyStartDate }} - {{ weeklyCompleteDate }}</span>
+        <span>{{ monthlyActivity.month }}</span>
       </div>
       <div class="outer">
         <div class="left">
@@ -17,20 +17,20 @@
           <span>Total earnings</span>
         </div>
         <div class="right">
-          <span>{{ weeklyOrders }}</span>
+          <span>{{ monthlyOrders }}</span>
           <span>Orders</span>
         </div>
       </div>
       <div class="outer">
         <span>Activity</span>
-        <span v-if="weeklyActivityDays > 1">{{ weeklyActivityDays }} days</span>
-        <span v-else>{{ weeklyActivityDays }} day</span>
+        <span v-if="monthlyActivityDays > 1">{{ monthlyActivityDays }} days</span>
+        <span v-else>{{ monthlyActivityDays }} day</span>
       </div>
     </div>
     <div class="content">
       <v-touch
         class="outer"
-        v-for="(dayActivity, index) in dayActivities"
+        v-for="(dayActivity, index) in monthlyDayActivities"
         :key="index"
         @tap="
           setPressedElement(dayActivity.date)
@@ -65,28 +65,26 @@
   import Decimal from "decimal.js"
 
   export default {
-    name: "WeeklyActivity",
+    name: "MonthlyActivity",
     data() {
       return {}
     },
     props: ["show", "pressedElement"],
     computed: {
       ...mapState({
-        weeklyActivity: (state) => state.activity.weeklyActivity,
+        monthlyActivity: (state) => state.activity.monthlyActivity,
       }),
       ...mapGetters([
-        "weeklyOrders",
-        "weeklyStartDate",
-        "weeklyCompleteDate",
-        "weeklyActivityDays",
-        "weeklyEarnings",
-        "dayActivities",
+        "monthlyOrders",
+        "monthlyActivityDays",
+        "monthlyEarnings",
+        "monthlyDayActivities"
       ]),
       intValue() {
-        return Math.floor(this.weeklyEarnings.toNumber())
+        return Math.floor(this.monthlyEarnings.toNumber())
       },
       floatValue() {
-        return this.weeklyEarnings
+        return this.monthlyEarnings
           .sub(new Decimal(this.intValue))
           .mul(new Decimal(100))
           .toNumber()
@@ -109,9 +107,9 @@
         }
         return sum.toNumber()
       },
-      closeWeeklySlider() {
-        this.$bus.$emit("closeWeekly")
-        this.$store.dispatch("clearWeekly")
+      closeMonthlySlider() {
+        this.$bus.$emit("closeMonthly")
+        this.$store.dispatch("clearMonthly")
       },
       selectDailyActivity(index) {
         this.$store.dispatch("selectDaily", index)

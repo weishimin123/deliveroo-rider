@@ -41,10 +41,18 @@
         <span>Previous activity</span>
         <span>{{ getStartTime(place) }} -- {{ getCompleteTime(place) }}</span>
       </div>
-      <div
+      <v-touch
         class="container"
         v-for="(order, index) in findOrdersByPlace(place)"
         :key="index"
+        @press="setPressElement(order.shop + order.fee)"
+        @pressup="clearPressedElement"
+        @panmove="clearPressedElement"
+        @tap="
+          setPressElement(order.shop + order.fee)
+          openOrderSlider(order)
+        "
+        :press="pressedElement == order.shop + order.fee"
       >
         <div class="left">
           <span>{{ order.shop }}</span>
@@ -57,11 +65,9 @@
         </div>
         <div class="right">
           <span>€{{ getOrderFee(order) }}</span>
-          <v-touch>
-            <img src="../images/forward.png" alt="" />
-          </v-touch>
+          <img src="../images/forward.png" alt="" />
         </div>
-      </div>
+      </v-touch>
     </div>
   </div>
 </template>
@@ -72,7 +78,7 @@
 
   export default {
     name: "DailyActivity",
-    props: ["show"],
+    props: ["show", "pressedElement"],
     computed: {
       ...mapState({
         dayActivity: (state) => state.activity.dayActivity,
@@ -154,9 +160,7 @@
       getOrderCompleteTime(order) {
         if (!order) return ""
         const details = order.orderDetails
-        return details.length == 1
-          ? details[0].complete
-          : details[1].complete
+        return details.length == 1 ? details[0].complete : details[1].complete
       },
       getOrders(order) {
         if (!order) return ""
@@ -171,6 +175,16 @@
         let result = this.dayActivity.orders.filter((ele) => ele.place == place)
         return result
       },
+      setPressElement(data) {
+        this.$bus.$emit("setPressedEle", data)
+      },
+      clearPressedElement() {
+        this.$bus.$emit("clearPressedEle")
+      },
+      openOrderSlider(data) {
+        this.$store.dispatch('selectOrder',data)
+        this.$bus.$emit('openOrder')
+      }
     },
   }
 </script>
@@ -339,6 +353,10 @@
             width: 9px;
           }
         }
+      }
+
+      .container[press] {
+        background-color: rgb(68, 68, 71);
       }
     }
   }

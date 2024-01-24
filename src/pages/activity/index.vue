@@ -1,6 +1,6 @@
 <template>
   <div class="activity-slider slider" :show="show">
-    <div class="outer">
+    <div class="outer header">
       <v-touch @tap="closeActivitySlider">
         <img src="../images/backward.png" alt="" />
       </v-touch>
@@ -19,36 +19,53 @@
         </v-touch>
       </div>
     </div>
-    <div
-      class="outer"
+    <v-touch
+      class="outer content"
       v-show="activityType == 'weekly'"
-      v-for="(activity,index) in weeklyActivities"
-      :key="index"
+      v-for="(weeklyActivity, index) in weeklyActivities"
+      :key="weeklyActivity.month"
+      @tap="
+        setPressedElement(weeklyActivity.fromDate)
+        openWeeklySlider(index)
+      "
+      @press="setPressedElement(weeklyActivity.fromDate)"
+      @pressup="clearPressedElement"
+      @panmove="clearPressedElement"
+      :press="pressedElement == weeklyActivity.fromDate"
     >
       <div class="left">
-        <span>{{ activity.fromDate }} - {{ activity.toDate }}</span>
-        <span>{{ getOrders(activity) }} orders</span>
+        <span>{{ weeklyActivity.fromDate }} - {{ weeklyActivity.toDate }}</span>
+        <span>{{ getOrders(weeklyActivity) }} orders</span>
       </div>
       <div class="right">
-        <span>€{{ getTotalAmount(activity) }}</span>
-        <v-touch @tap="openWeeklySlider(index)">
-          <img src="../images/forward.png" alt="" />
-        </v-touch>
+        <span>€{{ getTotalAmount(weeklyActivity) }}</span>
+        <img src="../images/forward.png" alt="" />
       </div>
-    </div>
-    <div
-      class="outer"
+    </v-touch>
+    <v-touch
+      class="outer content"
       v-show="activityType == 'monthly'"
-      v-for="activity in mmonthlyActivities"
-      :key="activity.month"
+      v-for="(monthlyActivity, index) in monthlyActivities"
+      :key="index"
+      @tap="
+        setPressedElement(monthlyActivity.month)
+        openMonthlySlider(index)
+      "
+      @press="setPressedElement(monthlyActivity.month)"
+      @pressup="clearPressedElement"
+      @panmove="clearPressedElement"
+      :press="pressedElement == monthlyActivity.month"
     >
-      <div>
-        <span>{{ activity.month }}</span>
-        <span>{{ activity.orders }} orders</span>
+      <div class="left">
+        <span>{{ monthlyActivity.month }}</span>
+        <span>{{ getMonthlyOrders(monthlyActivity) }} orders</span>
       </div>
-      <span>€{{ activity.totalAmount }}</span>
-    </div>
-    <div class="outer">
+      <div class="right">
+        <span>€{{ getMonthlyEarning(monthlyActivity) }}</span>
+        <img src="../images/forward.png" alt="" />
+      </div>
+    </v-touch>
+    <div class="outer footer">
       <v-touch @tap="addMoreActivities">
         <a href="#">See more</a>
       </v-touch>
@@ -65,15 +82,13 @@
     data() {
       return {
         activityType: "weekly",
-        weeklySliderShow: false,
-        selectedActivity: {},
       }
     },
-    props: ["show"],
+    props: ["show", "pressedElement"],
     computed: {
       ...mapState({
         weeklyActivities: (state) => state.activity.weeklyActivities,
-        mmonthlyActivities: (state) => state.activity.mmonthlyActivities,
+        monthlyActivities: (state) => state.activity.monthlyActivities,
       }),
     },
     methods: {
@@ -81,32 +96,64 @@
       closeActivitySlider() {
         this.$bus.$emit("closeActivity")
       },
-      getOrders(activity) {
+      getOrders(weeklyActivity) {
         let orders = 0
-        activity.details.forEach((element) => {
-          orders += element.details.length
-        })
+        for (const dayActivity of weeklyActivity.dayActivities) {
+          orders += dayActivity.orders.length
+        }
         return orders
       },
-      getTotalAmount(activity) {
+      getTotalAmount(weeklyActivity) {
         let sum = new Decimal(0)
-        activity.details.forEach((element) => {
-          element.details.forEach((orderDetail) => {
-            sum = sum.add(new Decimal(orderDetail.fee))
-            if (orderDetail.extra) {
-              sum = sum.add(new Decimal(orderDetail.extra))
+        for (const dayActivity of weeklyActivity.dayActivities) {
+          for (const order of dayActivity.orders) {
+            sum = sum.add(new Decimal(order.fee))
+            if (order.extra) {
+              sum = sum.add(new Decimal(order.extra))
             }
-            if (orderDetail.tip) {
-              sum = sum.add(new Decimal(orderDetail.tip))
+            if (order.tip) {
+              sum = sum.add(new Decimal(order.tip))
             }
-          })
-        })
+          }
+        }
         return sum.toNumber()
       },
-      openWeeklySlider(index){
-        this.$bus.$emit('openWeekly')
-        this.$store.dispatch('selectWeekly',index)
-      }
+      getMonthlyOrders(monthlyActivity) {
+        if (!monthlyActivity) return 0
+        let sum = 0
+        for (const dayActivity of monthlyActivity.dayActivities) {
+          for (const order of dayActivity.orders) {
+            sum += 1
+          }
+        }
+        return sum
+      },
+      getMonthlyEarning(monthlyActivity) {
+        if (!monthlyActivity) return 0
+        let sum = new Decimal(0)
+        for (const dayActivity of monthlyActivity.dayActivities) {
+          for (const order of dayActivity.orders) {
+            if (order.fee) sum = sum.add(new Decimal(order.fee))
+            if (order.extra) sum = sum.add(new Decimal(order.extra))
+            if (order.tip) sum = sum.add(new Decimal(order.tip))
+          }
+        }
+        return sum.toNumber()
+      },
+      openWeeklySlider(index) {
+        this.$bus.$emit("openWeekly")
+        this.$store.dispatch("selectWeekly", index)
+      },
+      openMonthlySlider(index) {
+        this.$bus.$emit("openMonthly")
+        this.$store.dispatch("selectMonthly", index)
+      },
+      setPressedElement(data) {
+        this.$bus.$emit("setPressedEle", data)
+      },
+      clearPressedElement() {
+        this.$bus.$emit("clearPressedEle")
+      },
     },
   }
 </script>
@@ -134,8 +181,8 @@
         flex-direction: column;
         justify-content: space-around;
 
-        span {
-          font-weight: normal;
+        span:first-child {
+          font-size: 16px;
         }
 
         span:last-child {
@@ -157,7 +204,7 @@
       }
     }
 
-    .outer:first-child {
+    .header {
       background-color: rgb(28, 28, 30);
       justify-content: flex-start;
       margin-bottom: 1.5vh;
@@ -194,10 +241,14 @@
       }
     }
 
-    .outer:last-child {
+    .footer {
       a {
         color: rgb(102, 224, 215);
       }
+    }
+
+    .content[press] {
+      background-color: rgb(68, 68, 71);
     }
   }
 </style>
